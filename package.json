@@ -1,0 +1,19 @@
+{
+  "name": "homebridge-weather",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "scripts": {
+    "start": "DEBUG=* homebridge -D -U . -P ."
+  },
+  "engines": {
+    "node": ">=6.12.1",
+    "homebridge": ">=0.2.0"
+  },
+  "dependencies": {
+    "request": "^2.83.0"
+  }
+}
