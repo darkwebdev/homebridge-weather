@@ -17,9 +17,12 @@
   ],
   "accessories": [
     {
-      "name": "Weather",
-      "accessory": "Weather",
-      "getUrl": "http://192.168.1.143/api/status"
+      "name": "DHT11",
+      "accessory": "DHT11@TvRoom",
+      "tempUrl": "http://192.168.1.161:8080/sensors/temp",
+      "humUrl": "http://192.168.1.161:8080/sensors/hum",
+      "tempIntervalSec": 60,
+      "humIntervalSec": 60
     }
   ]
 }
