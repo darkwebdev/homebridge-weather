@@ -10,12 +10,6 @@ module.exports = (Service, Characteristic) => {
         temp: config['tempUrl'],
         hum: config['humUrl']
       };
-      this.cache = {};
-      this.intervalSec = {
-        temp: config['tempIntervalSec'],
-        hum: config['humIntervalSec']
-      };
-      this.lastUpdateSec = {};
     }
 
     getServices() {
@@ -51,29 +45,21 @@ module.exports = (Service, Characteristic) => {
     }
 
     fetch(param, next) {
-      const unixTimeSec = new Date().getTime() / 1000;
-      const intervalPassed = this.lastUpdateSec[param] + this.intervalSec[param] > unixTimeSec;
+      this.log(`Requesting ${param} from`, this.url[param]);
 
-      if (this.cache[param] && !intervalPassed) {
-        this.log(`Returning cached ${param}`, this.cache[param]);
-      } else {
-        this.log(`Requesting ${param} from`, this.url[param]);
+      request(this.url[param], (err, response, body) => {
+        if (err) {
+          this.log(err);
+        } else {
+          const bodyObj = (response && response.statusCode === 200) && JSON.parse(body);
 
-        request(this.url[param], (err, response, body) => {
-          if (err) {
-            this.log(err);
-          } else {
-            const bodyObj = (response && response.statusCode === 200) && JSON.parse(body);
+          const value = bodyObj ? bodyObj.value : null;
 
-            this.cache[param] = bodyObj ? bodyObj.value : null;
-            this.lastUpdateSec[param] = unixTimeSec;
+          this.log(`Returning ${param}`, value);
 
-            this.log(`Caching ${param}`, this.cache[param]);
-          }
-        });
-      }
-
-      next(null, this.cache[param]);
+          next(null, value);
+        }
+      });
     }
 
   };

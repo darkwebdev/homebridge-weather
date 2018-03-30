@@ -6,23 +6,13 @@
     "pin": "031-45-154"
   },
   "description": "This is an example configuration file with one fake accessory and one fake platform. You can use this as a template for creating your own configuration file containing devices you actually own.",
-  "platforms": [
-    {
-      "platform": "Info",
-      "port": 9876,
-      "name": "Homebridge Info Server",
-      "updateFrequency": 10000,
-      "updateCheckFrequency": 3600000
-    }
-  ],
+  "platforms": [],
   "accessories": [
     {
       "name": "DHT11",
       "accessory": "DHT11@TvRoom",
       "tempUrl": "http://192.168.1.161:8080/sensors/temp",
-      "humUrl": "http://192.168.1.161:8080/sensors/hum",
-      "tempIntervalSec": 60,
-      "humIntervalSec": 60
+      "humUrl": "http://192.168.1.161:8080/sensors/hum"
     }
   ]
 }
